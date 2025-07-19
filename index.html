@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Rideo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #145A32;
+      --primary-light: #E8F5E9;
+      --secondary: #2E7D32;
+      --accent: #FFC107;
+      --dark: #263238;
+      --gray: #607D8B;
+      --light-bg: #F5F7FA;
+      --white: #FFFFFF;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #F0F3F4;
+      font-family: 'Inter', sans-serif;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      width: 100%;
+      max-width: 1480px;
+      position: fixed;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 70px;
+      border-radius: 25px;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    header.scrolled {
+      background-color: rgba(20, 90, 50, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+
+    #header_nav_ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+
+    #header_nav_ul li {
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      padding: 10px 0;
+    }
+
+    #header_nav_ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    #header_nav_ul li:hover a {
+      color: var(--primary-light);
+    }
+
+    #header_nav_ul li::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary-light);
+      transition: width 0.3s ease;
+    }
+
+    #header_nav_ul li:hover::after {
+      width: 100%;
+    }
+
+    .account-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    main {
+      background: url('pexels-vladalex94-1402787.jpg') no-repeat center center/cover;
+      background-size: cover;
+      height: 100vh;
+      position: relative;
+    }
+
+    main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    #hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 490px;
+      position: relative;
+      color: var(--white);
+      padding: 0 80px;
+      height: 100%;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s 0.3s forwards;
+    }
+
+    .hero-tagline {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      line-height: 1.2;
+    }
+
+    .hero-description {
+      font-size: 18px;
+      margin-bottom: 30px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .cta_button {
+      padding: 12px 24px;
+      background-color: var(--primary);
+      color: var(--white);
+      font-size: 18px;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      min-width: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta_button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%, -50%);
+      transform-origin: 50% 50%;
+    }
+
+    .cta_button:focus:not(:active)::after {
+      animation: ripple 0.6s ease-out;
+    }
+
+    .cta_button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(20, 90, 50, 0.4);
+    }
+
+    .secondary_button {
+      padding: 12px 24px;
+      background-color: transparent;
+      color: var(--white);
+      font-size: 18px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid var(--white);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 180px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .secondary_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .secondary_button:hover::before {
+      left: 100%;
+    }
+
+    .secondary_button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .scroll-down {
+      position: relative;
+      top: 150px;
+      left: 650px;
+      color: white;
+      font-size: 24px;
+      text-decoration: none;
+      z-index: 10;
+      animation: bounce 2s infinite;
+      opacity: 0.8;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scroll-down:hover {
+      opacity: 1;
+    }
+
+    .scroll-down img {
+      width: 50px;
+      height: 50px;
+      transition: transform 0.3s;
+    }
+
+    .scroll-down:hover img {
+      transform: translateY(5px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 1;
+      }
+
+      20% {
+        transform: scale(25, 25);
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(40, 40);
+      }
+    }
+
+    .find-car {
+      padding: 80px 20px;
+      background: var(--white);
+      margin: 40px auto;
+      max-width: 1200px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .find-car.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      transition: all 0.4s;
+    }
+
+    .section-title:hover::after {
+      width: 120px;
+      background: var(--secondary);
+    }
+
+    .search-filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      background: var(--white);
+      border: 1px solid var(--gray);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+      color: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(20, 90, 50, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .filter-btn:hover::before {
+      left: 100%;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+      border-color: var(--primary);
+    }
+
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .car-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      z-index: 1;
+    }
+
+    .car-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(20, 90, 50, 0.15);
+    }
+
+    .car-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 3;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .car-image-container {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .car-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .car-card:hover .car-image {
+      transform: scale(1.05);
+    }
+
+    .car-info {
+      padding: 20px;
+    }
+
+    .car-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .car-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 0;
+    }
+
+    .car-year {
+      font-size: 14px;
+      color: var(--gray);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .car-rating {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .car-stars {
+      color: #FFD700;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .car-reviews {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .car-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .car-spec {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .car-spec-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--light-bg);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 12px;
+    }
+
+    .car-spec-text {
+      font-size: 14px;
+      color: var(--dark);
+    }
+
+    .car-price {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .car-price::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .car-price-amount {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: baseline;
+    }
+
+    .car-price-period {
+      font-size: 14px;
+      color: var(--gray);
+      margin-left: 5px;
+      font-weight: 500;
+    }
+
+    .car-price-discount {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .car-price-old {
+      font-size: 14px;
+      color: var(--gray);
+      text-decoration: line-through;
+      margin-right: 10px;
+    }
+
+    .car-price-save {
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      background: var(--secondary);
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+
+    .car-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .car-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .car-btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: 0 5px 15px rgba(20, 90, 50, 0.3);
+    }
+
+    .car-btn-primary:hover {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(20, 90, 50, 0.4);
+    }
+
+    .car-btn-secondary {
+      background: white;
+      color: var(--dark);
+      border: 1px solid #e0e0e0;
+    }
+
+    .car-btn-secondary:hover {
+      background: #f5f7fa;
+      border-color: #d0d0d0;
+    }
+
+    .car-features {
+      display: none;
+      padding: 15px;
+      background: var(--light-bg);
+      border-top: 1px solid #e0e0e0;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .car-card:hover .car-features {
+      display: grid;
+      animation: fadeIn 0.5s;
+    }
+
+    .car-feature {
+      font-size: 12px;
+      color: var(--dark);
+      padding: 6px;
+      background: white;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .car-feature i {
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      header {
+        width: 95%;
+        padding: 0 15px;
+      }
+
+      #hero-section {
+        padding: 0 40px;
+        max-width: 450px;
+      }
+
+      .hero-tagline {
+        font-size: 36px;
+      }
+
+      .hero-buttons {
+        flex-wrap: wrap;
+      }
+
+      .scroll-down {
+        display: none;
+      }
+    }
+
+
+    @media (max-width: 768px) {
+      header {
+        height: 60px;
+        border-radius: 25px;
+      }
+
+      #header_h1 {
+        font-size: 24px;
+      }
+
+      #header_nav_ul {
+        gap: 10px;
+      }
+
+      #header_nav_ul li {
+        font-size: 10px;
+      }
+
+      #hero-section {
+        padding: 0 30px !important;
+        max-width: 100% !important;
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-tagline {
+        font-size: 32px;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .scroll-down {
+        top: 100px;
+      }
+
+      .find-car {
+        padding: 60px 15px;
+      }
+    }
+
+
+    @media (max-width: 576px) and (min-width: 425px) {
+      header {
+        padding: 0 10px;
+        border-radius: 25px;
+      }
+
+      #header_h1 {
+        font-size: 20px;
+        padding-left: 10px;
+      }
+
+      #header_nav_ul li {
+        font-size: 12px;
+        gap: 15px;
+      }
+
+      header.scroled {
+        background-color: rgba(20, 90, 50, 0.8);
+      }
+
+      .hero-tagline {
+        font-size: 28px;
+        margin-bottom: 15px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+        margin-bottom: 25px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .cta_button,
+      .secondary_button {
+        width: 100%;
+        max-width: 280px;
+        min-width: auto;
+      }
+
+      .scroll-down {
+        top: 120px;
+        right: 50%;
+
+      }
+
+      .search-filters {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+
+      .filter-btn {
+        white-space: nowrap;
+      }
+    }
+
+
+    @media (max-width: 425px) {
+      header {
+        height: 50px;
+      }
+
+      #header_h1 {
+        font-size: 15px;
+      }
+
+      #header_nav_ul li {
+        font-size: 10px;
+      }
+
+      .hero-tagline {
+        font-size: 26px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .cta_button,
+      .secondary_button {
+        padding: 12px;
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+    }
+
+
+    @media (max-width: 375px) and (min-width: 320px) {
+      header {
+        height: 50px;
+        width: 100%;
+        padding: 0 5px;
+      }
+
+      #header_nav_ul li {
+        font-size: 9px;
+      }
+
+      .hero-tagline {
+        font-size: 24px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+      }
+
+      .section-title {
+        font-size: 26px;
+      }
+
+      .car-card {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      #hero-section {
+        padding-top: 30px !important;
+        padding-bottom: 30px !important;
+      }
+
+      .hero-tagline {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .scroll-down {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header id="main-header">
+    <h1 id="header_h1">Rideo</h1>
+    <nav id="header_nav">
+      <ul id="header_nav_ul">
+        <li><a href="#" data-i18n="nav_home">Home</a></li>
+        <li><a href="about.html" data-i18n="nav_about">About</a></li>
+        <li><a href="#find-car" data-i18n="nav_find">Find a Car</a></li>
+        <li><a href="faq.html" data-i18n="nav_faq">FAQ</a></li>
+        <li><a href="personal_account.html" class="account-link" data-i18n="nav_account">
+            <i class="fas fa-user"></i> <span>Личный кабинет</span>
+          </a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-tagline" data-i18n="hero_tagline">Арендуйте автомобиль за 1 минуту</h1>
+        <p class="hero-description" data-i18n="hero_desc">Без скрытых платежей, залогов и бумажной волокиты. Ваша
+          свобода передвижения начинается здесь.</p>
+        <div class="hero-buttons">
+          <a href="#find-car" class="cta_button" data-i18n="cta_button">Выбрать авто</a>
+          <a href="moreabt.html" class="secondary_button" data-i18n="secondary_button">Узнать больше</a>
+        </div>
+      </div>
+      <a href="#find-car" class="scroll-down">
+        <img src="icons8-down-arrow-96.png" alt="Scroll down">
+      </a>
+    </section>
+
+    <section id="find-car" class="find-car">
+      <h2 class="section-title" data-i18n="find_car_title">Найти авто</h2>
+      <div class="search-filters">
+        <button class="filter-btn active" data-category="all" data-i18n="filter_all">Все</button>
+        <button class="filter-btn" data-category="economy" data-i18n="filter_economy">Эконом</button>
+        <button class="filter-btn" data-category="comfort" data-i18n="filter_comfort">Комфорт</button>
+        <button class="filter-btn" data-category="premium" data-i18n="filter_premium">Премиум</button>
+        <button class="filter-btn" data-category="electric" data-i18n="filter_electric">Электромобили</button>
+      </div>
+
+      <div class="cars-grid" id="cars-container">
+        <div class="car-card" data-category="economy">
+          <div class="car-badge">Хит сезона</div>
+          <div class="car-image-container">
+            <img src="2022_kia_rio.jpg" alt="Kia Rio" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Kia Rio</h3>
+                <div class="car-year">2023 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★★</div>
+                <div class="car-reviews">128 отзывов</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-cog"></i></div>
+                <div class="car-spec-text">Автомат</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="car-spec-text">6.1л/100км</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="car-spec-text">Кондиционер</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">1 200 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">1 500 ₽</span>
+                <span class="car-price-save">−20%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-bluetooth"></i> Bluetooth</div>
+            <div class="car-feature"><i class="fas fa-map-marker-alt"></i> Навигация</div>
+            <div class="car-feature"><i class="fas fa-parking"></i> Парктроник</div>
+            <div class="car-feature"><i class="fas fa-music"></i> Аудиосистема</div>
+          </div>
+        </div>
+
+        <div class="car-card" data-category="economy">
+          <div class="car-badge">Выбор №1</div>
+          <div class="car-image-container">
+            <img src="hyundai_solaris.webp" alt="Hyundai Solaris" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Hyundai Solaris</h3>
+                <div class="car-year">2022 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★☆</div>
+                <div class="car-reviews">97 отзывов</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-cog"></i></div>
+                <div class="car-spec-text">Автомат</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="car-spec-text">6.3л/100км</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="car-spec-text">Кондиционер</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">1 300 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">1 600 ₽</span>
+                <span class="car-price-save">−19%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-mobile-alt"></i> Android Auto</div>
+            <div class="car-feature"><i class="fas fa-car-side"></i> Камера заднего вида</div>
+            <div class="car-feature"><i class="fas fa-umbrella-beach"></i> Круиз-контроль</div>
+            <div class="car-feature"><i class="fas fa-chair"></i> Подогрев сидений</div>
+          </div>
+        </div>
+
+        <div class="car-card" data-category="comfort">
+          <div class="car-badge">Новинка</div>
+          <div class="car-image-container">
+            <img src="2023_Volkswagen_Polo.png" alt="Volkswagen Polo" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Volkswagen Polo</h3>
+                <div class="car-year">2023 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★★</div>
+                <div class="car-reviews">156 отзывов</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-cog"></i></div>
+                <div class="car-spec-text">Автомат</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="car-spec-text">5.9л/100км</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="car-spec-text">Климат-контроль</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">1 500 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">1 800 ₽</span>
+                <span class="car-price-save">−17%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-apple-alt"></i> Apple CarPlay</div>
+            <div class="car-feature"><i class="fas fa-parking"></i> Парктроник</div>
+            <div class="car-feature"><i class="fas fa-broadcast-tower"></i> Два дисплея</div>
+            <div class="car-feature"><i class="fas fa-lightbulb"></i> Светодиодные фары</div>
+          </div>
+        </div>
+
+        <div class="car-card" data-category="comfort">
+          <div class="car-badge">Лучший выбор</div>
+          <div class="car-image-container">
+            <img src="801.jpg" alt="Skoda Octavia" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Skoda Octavia</h3>
+                <div class="car-year">2023 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★★</div>
+                <div class="car-reviews">201 отзыв</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-cog"></i></div>
+                <div class="car-spec-text">Автомат</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="car-spec-text">6.0л/100км</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="car-spec-text">Климат-контроль</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">1 800 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">2 100 ₽</span>
+                <span class="car-price-save">−14%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-tachometer-alt"></i> Виртуальная приборка</div>
+            <div class="car-feature"><i class="fas fa-car-side"></i> Камера 360°</div>
+            <div class="car-feature"><i class="fas fa-umbrella-beach"></i> Адаптивный круиз</div>
+            <div class="car-feature"><i class="fas fa-memory"></i> Память сидений</div>
+          </div>
+        </div>
+
+        <div class="car-card" data-category="premium">
+          <div class="car-badge">Премиум</div>
+          <div class="car-image-container">
+            <img src="Toyota-Camry.jpg" alt="Toyota Camry" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Toyota Camry</h3>
+                <div class="car-year">2023 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★★</div>
+                <div class="car-reviews">178 отзывов</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-cog"></i></div>
+                <div class="car-spec-text">Автомат</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-gas-pump"></i></div>
+                <div class="car-spec-text">7.2л/100км</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-snowflake"></i></div>
+                <div class="car-spec-text">3-зонный климат</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">2 500 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">2 900 ₽</span>
+                <span class="car-price-save">−14%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-leaf"></i> Эко-режим</div>
+            <div class="car-feature"><i class="fas fa-shield-alt"></i> Полный привод</div>
+            <div class="car-feature"><i class="fas fa-chair"></i> Вентиляция сидений</div>
+            <div class="car-feature"><i class="fas fa-bolt"></i> Подогрев руля</div>
+          </div>
+        </div>
+
+        <div class="car-card" data-category="electric">
+          <div class="car-badge">Электро</div>
+          <div class="car-image-container">
+            <img src="Tesla_Model_3.jpg" alt="Tesla Model 3" class="car-image">
+          </div>
+          <div class="car-info">
+            <div class="car-header">
+              <div>
+                <h3 class="car-title">Tesla Model 3</h3>
+                <div class="car-year">2023 г.в.</div>
+              </div>
+              <div class="car-rating">
+                <div class="car-stars">★★★★★</div>
+                <div class="car-reviews">245 отзывов</div>
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-bolt"></i></div>
+                <div class="car-spec-text">Электро</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-users"></i></div>
+                <div class="car-spec-text">5 мест</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-road"></i></div>
+                <div class="car-spec-text">500 км заряд</div>
+              </div>
+              <div class="car-spec">
+                <div class="car-spec-icon"><i class="fas fa-rocket"></i></div>
+                <div class="car-spec-text">3.3 сек до 100</div>
+              </div>
+            </div>
+
+            <div class="car-price">
+              <div class="car-price-amount">3 000 ₽<span class="car-price-period">/час</span></div>
+              <div class="car-price-discount">
+                <span class="car-price-old">3 500 ₽</span>
+                <span class="car-price-save">−14%</span>
+              </div>
+            </div>
+
+            <div class="car-buttons">
+              <button class="car-btn car-btn-primary">
+                <i class="fas fa-key"></i> Арендовать
+              </button>
+              <button class="car-btn car-btn-secondary">
+                <i class="fas fa-info-circle"></i> Подробнее
+              </button>
+            </div>
+          </div>
+
+          <div class="car-features">
+            <div class="car-feature"><i class="fas fa-tv"></i> 15" дисплей</div>
+            <div class="car-feature"><i class="fas fa-robot"></i> Автопилот</div>
+            <div class="car-feature"><i class="fas fa-gamepad"></i> Игровая система</div>
+            <div class="car-feature"><i class="fas fa-fan"></i> БиоЗащитный режим</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.location.hash === '#find-car') {
+        history.replaceState(null, null, ' ');
+        window.scrollTo(0, 0);
+      }
+
+      const header = document.getElementById('main-header');
+      const findCarSection = document.querySelector('.find-car');
+
+
+      findCarSection.classList.add('visible');
+
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 620) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          const category = this.dataset.category;
+          document.querySelectorAll('.car-card').forEach(card => {
+            card.style.display = category === 'all' || card.dataset.category === category ? 'block' : 'none';
+          });
+        });
+      });
+
+      document.querySelectorAll('.car-btn-primary').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const carTitle = this.closest('.car-card').querySelector('.car-title').textContent;
+
+
+          createConfetti();
+
+          alert(`Вы выбрали ${carTitle}! Скоро с вами свяжется наш менеджер.`);
+        });
+      });
+
+
+      function createConfetti() {
+        const colors = ['#145A32', '#2E7D32', '#FFC107', '#E8F5E9', '#FFFFFF'];
+
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.width = Math.random() * 10 + 5 + 'px';
+          confetti.style.height = Math.random() * 10 + 5 + 'px';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * window.innerWidth + 'px';
+          confetti.style.top = '-20px';
+          confetti.style.zIndex = '9999';
+          confetti.style.borderRadius = '50%';
+          confetti.style.opacity = '0';
+
+          document.body.appendChild(confetti);
+
+
+          const animation = confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 0 },
+            { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 360}deg)`, opacity: 1 }
+          ], {
+            duration: Math.random() * 3000 + 2000,
+            easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+          });
+
+
+          animation.onfinish = () => confetti.remove();
+        }
+      }
+
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          if (this.getAttribute('href') !== '#') {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

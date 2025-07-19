@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rideo - Личный кабинет</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary: #145A32;
+      --primary-light: #E8F5E9;
+      --secondary: #2E7D32;
+      --accent: #FFC107;
+      --dark: #1A1A1A;
+      --gray: #666;
+      --light-gray: #e0e0e0;
+      --light-bg: #F5F7FA;
+      --white: #FFFFFF;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light-bg);
+      color: var(--dark);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      position: relative;
+    }
+
+    .back-btn {
+      position: fixed;
+      left: 30px;
+      top: 30px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .back-btn:hover {
+      transform: translateX(-5px);
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .back-btn i {
+      transition: var(--transition);
+    }
+
+    .back-btn:hover i {
+      transform: translateX(-5px);
+    }
+
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .account-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0;
+      position: relative;
+    }
+
+    .account-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+
+    .user-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .user-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%23145A32" opacity="0.05" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg>');
+      background-size: cover;
+      z-index: -1;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .user-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary-light);
+      box-shadow: var(--shadow-md);
+    }
+
+    .user-info {
+      flex: 1;
+    }
+
+    .user-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 5px;
+    }
+
+    .user-status {
+      display: inline-block;
+      background: linear-gradient(135deg, gold, #FFD700);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #7F6000;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-item {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      text-align: center;
+      border: 1px solid var(--light-bg);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .nav-menu {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      gap: 15px;
+    }
+
+    .nav-item {
+      white-space: nowrap;
+      padding: 12px 25px;
+      background: var(--white);
+      border-radius: 50px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--light-bg);
+    }
+
+    .nav-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .trip-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      border: 1px solid var(--light-bg);
+    }
+
+    .trip-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .trip-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+
+    .trip-date {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .trip-status {
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .trip-model {
+      font-weight: 600;
+      margin: 5px 0;
+      font-size: 1.1rem;
+    }
+
+    .trip-number {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .trip-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .trip-detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .trip-detail i {
+      color: var(--primary);
+      width: 24px;
+      height: 24px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .trip-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    .trip-price {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .trip-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .trip-btn {
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .trip-btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .trip-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .trip-btn-secondary {
+      background: var(--white);
+      color: var(--dark);
+      border: 1px solid var(--light-gray);
+    }
+
+    .trip-btn-secondary:hover {
+      background: var(--light-bg);
+    }
+
+    .payment-method {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      border: 1px solid var(--light-bg);
+    }
+
+    .payment-method:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .payment-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .payment-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .payment-details {
+      flex: 1;
+    }
+
+    .payment-name {
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .payment-default {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .payment-actions {
+      color: var(--gray);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .payment-actions:hover {
+      color: var(--primary);
+      transform: rotate(90deg);
+    }
+
+    .add-card-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .add-card-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .bonus-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bonus-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%23FFD700" opacity="0.1" d="M0,0 L100,0 L100,100 L0,100 Z"></path></svg>');
+      background-size: cover;
+      z-index: -1;
+    }
+
+    .bonus-amount {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #FFD700;
+      margin: 20px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .bonus-text {
+      font-size: 1.1rem;
+      color: var(--gray);
+      margin-bottom: 30px;
+    }
+
+    .status-card {
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .status-title {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #7F6000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-title i {
+      color: #FFD700;
+    }
+
+    .status-bar {
+      height: 10px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .status-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #FFD700, gold);
+      border-radius: 5px;
+      width: 65%;
+    }
+
+    .status-info {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .settings-form {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(20, 90, 50, 0.2);
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      margin-top: 20px;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .help-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .help-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      margin-bottom: 15px;
+    }
+
+    .faq-question {
+      background: var(--light-bg);
+      padding: 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--primary-light);
+    }
+
+    .contact-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 992px) {
+      .container {
+        padding: 60px 20px;
+      }
+
+      .account-title {
+        font-size: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .back-btn {
+        left: 20px;
+        top: 20px;
+        padding: 8px 15px;
+      }
+
+      .container {
+        padding: 50px 15px;
+      }
+
+      .account-title {
+        font-size: 1.8rem;
+      }
+
+      .user-profile {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-menu {
+        gap: 10px;
+      }
+
+      .nav-item {
+        padding: 10px 20px;
+      }
+
+      .trip-details {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .back-btn {
+        left: 15px;
+        top: 15px;
+        font-size: 0.9rem;
+      }
+
+      .account-title {
+        font-size: 1.6rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-menu {
+        overflow-x: auto;
+        padding-bottom: 5px;
+      }
+
+      .nav-item {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      .trip-card {
+        padding: 15px;
+      }
+
+      .trip-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .trip-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .account-title {
+        font-size: 1.4rem;
+      }
+
+      .user-avatar {
+        width: 60px;
+        height: 60px;
+      }
+
+      .user-name {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-btn animate__animated animate__fadeIn">
+      <i class="fas fa-arrow-left"></i> На главную
+    </a>
+
+    <div class="account-header animate__animated animate__fadeIn">
+      <h1 class="account-title">Личный кабинет</h1>
+    </div>
+
+    <div class="user-card animate__animated animate__fadeIn">
+      <div class="user-profile">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Александр К." class="user-avatar">
+        <div class="user-info">
+          <h2 class="user-name">Александр К.</h2>
+          <span class="user-status">Gold member</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">47 <i class="fas fa-car" style="font-size: 1.2rem;"></i></div>
+          <div class="stat-label">Поездок</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">1,240 <i class="fas fa-star" style="font-size: 1.2rem;"></i></div>
+          <div class="stat-label">Бонусы</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><i class="fas fa-leaf" style="font-size: 1.2rem;"></i> 84 кг</div>
+          <div class="stat-label">Эко-вклад</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value"><i class="fas fa-coins" style="font-size: 1.2rem;"></i> 12,450₽</div>
+          <div class="stat-label">Сэкономлено</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-menu animate__animated animate__fadeIn animate__delay-1s">
+      <div class="nav-item active" data-tab="trips"><i class="fas fa-car"></i> Мои поездки</div>
+      <div class="nav-item" data-tab="payments"><i class="fas fa-credit-card"></i> Оплата</div>
+      <div class="nav-item" data-tab="bonuses"><i class="fas fa-star"></i> Бонусы</div>
+      <div class="nav-item" data-tab="settings"><i class="fas fa-cog"></i> Настройки</div>
+      <div class="nav-item" data-tab="help"><i class="fas fa-question-circle"></i> Помощь</div>
+    </div>
+
+    <div id="trips" class="tab-content active animate__animated animate__fadeIn animate__delay-1s">
+      <div class="trip-card">
+        <div class="trip-header">
+          <span class="trip-date">Сегодня, 14:30</span>
+          <span class="trip-status">Завершена</span>
+        </div>
+        <div class="trip-model">Kia Rio</div>
+        <div class="trip-number">A123БВ 178</div>
+        <div class="trip-details">
+          <div class="trip-detail">
+            <i class="fas fa-clock"></i>
+            <span>30 мин</span>
+          </div>
+          <div class="trip-detail">
+            <i class="fas fa-road"></i>
+            <span>5 км</span>
+          </div>
+        </div>
+        <div class="trip-footer">
+          <span class="trip-price">600₽</span>
+        </div>
+      </div>
+
+      <div class="trip-card">
+        <div class="trip-header">
+          <span class="trip-date">12 мая, 10:15</span>
+          <span class="trip-status">Завершена</span>
+        </div>
+        <div class="trip-model">Hyundai Solaris</div>
+        <div class="trip-number">О321ТС 178</div>
+        <div class="trip-details">
+          <div class="trip-detail">
+            <i class="fas fa-clock"></i>
+            <span>1 ч</span>
+          </div>
+          <div class="trip-detail">
+            <i class="fas fa-road"></i>
+            <span>12 км</span>
+          </div>
+        </div>
+        <div class="trip-footer">
+          <span class="trip-price">1300₽</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="payments" class="tab-content">
+      <div class="payment-method">
+        <div class="payment-info">
+          <div class="payment-icon">
+            <i class="fab fa-cc-visa"></i>
+          </div>
+          <div class="payment-details">
+            <div class="payment-name">Visa •••• 4242</div>
+            <div class="payment-default">Основной метод</div>
+          </div>
+        </div>
+        <div class="payment-actions">
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      </div>
+
+      <div class="payment-method">
+        <div class="payment-info">
+          <div class="payment-icon">
+            <i class="fab fa-cc-mastercard"></i>
+          </div>
+          <div class="payment-details">
+            <div class="payment-name">Mastercard •••• 5578</div>
+          </div>
+        </div>
+        <div class="payment-actions">
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      </div>
+
+      <button class="add-card-btn">
+        <i class="fas fa-plus"></i> Добавить карту
+      </button>
+    </div>
+
+    <div id="bonuses" class="tab-content">
+      <div class="bonus-card">
+        <h3>Ваш бонусный баланс</h3>
+        <div class="bonus-amount">
+          <i class="fas fa-star"></i> 1,240
+        </div>
+        <p class="bonus-text">Используйте бонусы для получения скидок на аренду автомобилей</p>
+
+        <div class="status-card">
+          <div class="status-title">
+            <i class="fas fa-crown"></i> Gold status
+          </div>
+          <div class="status-bar">
+            <div class="status-progress"></div>
+          </div>
+          <div class="status-info">До следующего уровня: 350 ★</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="settings" class="tab-content">
+      <div class="settings-form">
+        <h3 class="help-title">Настройки профиля</h3>
+
+        <div class="form-group">
+          <label class="form-label">Имя</label>
+          <input type="text" class="form-input" value="Александр">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" value="alex@example.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Номер телефона</label>
+          <input type="tel" class="form-input" value="+7 (900) 123-45-67">
+        </div>
+
+        <button class="save-btn">
+          <i class="fas fa-save"></i> Сохранить изменения
+        </button>
+      </div>
+    </div>
+
+    <div id="help" class="tab-content">
+      <div class="help-card">
+        <h3 class="help-title">Центр поддержки</h3>
+
+        <div class="form-group">
+          <label class="form-label">Частые вопросы</label>
+          <div class="faq-item">
+            <div class="faq-question">Как продлить аренду?</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Где можно оставить автомобиль?</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Как отменить бронирование?</div>
+          </div>
+        </div>
+
+        <button class="contact-btn">
+          <i class="fas fa-headset"></i> Связаться с поддержкой
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      document.querySelectorAll('.nav-item').forEach(item => {
+        if (item.id !== 'logoutBtn') {
+          item.addEventListener('click', function () {
+            document.querySelectorAll('.nav-item').forEach(i => {
+              i.classList.remove('active');
+            });
+            this.classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(tab => {
+              tab.classList.remove('active');
+            });
+
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+          });
+        }
+      });
+
+      const saveBtn = document.querySelector('.save-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          Swal.fire({
+            title: 'Настройки сохранены',
+            icon: 'success',
+            confirmButtonColor: '#145A32',
+            confirmButtonText: 'OK'
+          });
+        });
+      }
+
+      const addCardBtn = document.querySelector('.add-card-btn');
+      if (addCardBtn) {
+        addCardBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          Swal.fire({
+            title: 'Добавить карту',
+            html: `
+              <div style="text-align: left;">
+                <div class="form-group" style="margin-bottom: 15px;">
+                  <label style="display: block; margin-bottom: 5px; font-weight: 500;">Номер карты</label>
+                  <input type="text" class="form-input" placeholder="1234 5678 9012 3456" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                  <div style="flex: 1;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Срок действия</label>
+                    <input type="text" class="form-input" placeholder="ММ/ГГ" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                  </div>
+                  <div style="flex: 1;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">CVV</label>
+                    <input type="text" class="form-input" placeholder="123" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                  </div>
+                </div>
+              </div>
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#145A32',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Добавить карту',
+            cancelButtonText: 'Отмена'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Карта добавлена',
+                text: 'Ваша карта успешно привязана к аккаунту',
+                icon: 'success',
+                confirmButtonColor: '#145A32'
+              });
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

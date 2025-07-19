@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rideo - Заявка на аренду</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #145A32;
+      --primary-light: #E8F5E9;
+      --secondary: #2E7D32;
+      --accent: #FFC107;
+      --dark: #263238;
+      --gray: #607D8B;
+      --light-bg: #F5F7FA;
+      --white: #FFFFFF;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: var(--light-bg);
+      color: var(--dark);
+    }
+
+
+    .back-btn {
+      position: fixed;
+      left: 30px;
+      top: 30px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .back-btn:hover {
+      transform: translateX(-5px);
+      background: var(--white);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .back-btn i {
+      transition: var(--transition);
+    }
+
+    .back-btn:hover i {
+      transform: translateX(-5px);
+    }
+
+    .registration-section {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .registration-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      align-items: center;
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(20, 90, 50, 0.1);
+    }
+
+    .registration-image {
+      flex: 1;
+      min-width: 300px;
+      height: 500px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .registration-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: transform 0.5s ease;
+    }
+
+    .registration-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .registration-content {
+      flex: 1;
+      min-width: 300px;
+      padding: 50px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary);
+      position: relative;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+
+
+    .registration-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(20, 90, 50, 0.2);
+      outline: none;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 20px;
+      top: 15px;
+      color: var(--gray);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .input-group input:focus+label,
+    .input-group input:not(:placeholder-shown)+label {
+      top: -10px;
+      left: 10px;
+      font-size: 0.8rem;
+      background: var(--white);
+      padding: 0 5px;
+      color: var(--primary);
+    }
+
+    .submit-btn {
+      padding: 15px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(20, 90, 50, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(20, 90, 50, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(1px);
+    }
+
+    .submit-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(to bottom right,
+          rgba(255, 255, 255, 0.3),
+          rgba(255, 255, 255, 0));
+      transform: rotate(30deg);
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover::after {
+      left: 100%;
+    }
+
+
+    .benefits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .benefit-item i {
+      color: var(--primary);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+
+    @media (max-width: 768px) {
+      .back-btn {
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 10;
+      }
+
+      .registration-container {
+        flex-direction: column;
+      }
+
+      .registration-image {
+        height: 300px;
+        flex: none;
+        width: 100%;
+      }
+
+      .registration-content {
+        padding: 30px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) and (min-width: 375px) {
+      .back-btn {
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 10;
+      }
+
+      .registration-section {
+        margin-top: 40px;
+        padding: 60px 20px;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .input-group input {
+        padding: 12px 15px;
+        width: calc(100% - 30px);
+      }
+    }
+
+    @media (max-width: 320px) {
+      .back-btn {
+        position: absolute;
+        left: 20px;
+        top: 0;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 10;
+      }
+
+      .registration-section {
+        margin-top: 40px;
+        padding: 40px 15px;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .registration-image {
+        height: 250px;
+      }
+
+      .registration-content {
+        padding: 20px;
+      }
+
+      .input-group input {
+        padding: 10px 12px;
+        width: calc(100% - 24px);
+      }
+
+      .submit-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html" class="back-btn animate__animated animate__fadeIn">
+    <i class="fas fa-arrow-left"></i> На главную
+  </a>
+  <section class="registration-section">
+    <div class="registration-container">
+      <div class="registration-image animate">
+        <img src="free-photo-of-audi-r8.jpeg" alt="Арендуйте авто с Rideo">
+        <div class="image-overlay"></div>
+      </div>
+
+      <div class="registration-content animate" style="animation-delay: 0.2s;">
+        <h2 class="section-title">Оставьте заявку</h2>
+        <p class="section-subtitle">
+          Всего 1 минута — и ваш идеальный автомобиль будет ждать вас!
+        </p>
+
+        <form class="registration-form" id="registrationForm">
+          <div class="input-group">
+            <input type="text" id="name" placeholder="" required>
+            <label for="name">Ваше имя</label>
+          </div>
+
+          <div class="input-group">
+            <input type="tel" id="phone" placeholder="" required>
+            <label for="phone">Номер телефона</label>
+          </div>
+
+          <div class="input-group">
+            <input type="email" id="email" placeholder="">
+            <label for="email">Email (необязательно)</label>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Забронировать авто</span>
+          </button>
+        </form>
+
+        <div class="benefits">
+          <div class="benefit-item">
+            <i class="fas fa-check-circle"></i>
+            <span>Подтверждение за 5 минут</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Без скрытых платежей</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-headset"></i>
+            <span>Поддержка 24/7</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const animateElements = document.querySelectorAll('.animate');
+
+      animateElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 100 * index);
+      });
+
+      const form = document.getElementById('registrationForm');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        alert('Спасибо! Мы скоро с вами свяжемся.');
+        form.reset();
+      });
+
+      const phoneInput = document.getElementById('phone');
+
+      phoneInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        let formattedValue = '';
+
+        if (value.length > 0) {
+          formattedValue += '+' + value.substring(0, 1);
+        }
+        if (value.length > 1) {
+          formattedValue += ' (' + value.substring(1, 4);
+        }
+        if (value.length > 4) {
+          formattedValue += ') ' + value.substring(4, 7);
+        }
+        if (value.length > 7) {
+          formattedValue += '-' + value.substring(7, 9);
+        }
+        if (value.length > 9) {
+          formattedValue += '-' + value.substring(9, 11);
+        }
+
+        e.target.value = formattedValue;
+      });
+    });
+  </script>
+</body>
+
+</html>
